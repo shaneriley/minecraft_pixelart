@@ -71,8 +71,8 @@ $(function() {
 
   function getCursorOffset(e) {
     var offset = {
-      left: ~~((e.clientX - $c.offset().left) / block_size),
-      top: ~~((e.clientY - $c.offset().top) / block_size)
+      left: ~~((e.pageX - $c.offset().left) / block_size),
+      top: ~~((e.pageY - $c.offset().top) / block_size)
     };
     return offset;
   }
