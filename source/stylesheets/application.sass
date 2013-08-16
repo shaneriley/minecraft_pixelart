@@ -1,5 +1,17 @@
 @import "mixins"
 
+= button($bg: #0066cc)
+  display: inline-block
+  -webkit-appearance: none
+  padding: 5px 10px
+  font: normal 13px Helvetica, Arial, sans-serif
+  text-decoration: none
+  color: #ffffff
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
+  border: none
+  border-radius: 5px
+  background: $bg
+
 html, body
   font: normal 14px Helvetica, Arial, sans-serif
   background: transparent url("/images/stone_brick.png") 50% 50% repeat
@@ -19,6 +31,8 @@ canvas
   margin: 0 27px 0 0
   cursor: crosshair
   border: 2px solid #0066cc
+  &.grid
+    background: transparent url("/images/bg_canvas.png") repeat
 
 #sidebar
   overflow: hidden
@@ -62,13 +76,7 @@ form
     &:focus
       outline: none
   input[type="submit"]
-    padding: 5px 10px
-    font: normal 13px Helvetica, Arial, sans-serif
-    color: #ffffff
-    text-shadow: 0 1px 1px rgba(0, 0, 0, .3)
-    border: none
-    border-radius: 5px
-    background: #0066cc
+    +button
   p.error
     display: none
     padding: 3px 5px
@@ -78,3 +86,9 @@ form
     color: #b00b00
     border: 2px solid #b00b00
     background: #fccfcc
+
+.controls
+  padding: 0 0 15px 0
+  a
+    +button(#888888)
+    margin: 0 5px 0 0

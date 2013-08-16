@@ -1,3 +1,12 @@
+BinaryObject = function(a, b) {
+  var o = {
+    0: a,
+    1: b,
+    val: function(bool) { return bool ? this[1] : this[0]; }
+  };
+  return o;
+};
+
 $(function() {
   var block_size = 48,
       $c = $("canvas"),
@@ -66,6 +75,14 @@ $(function() {
       mousedown: canvas_actions.press,
       mouseup: canvas_actions.release,
       mouseleave: canvas_actions.unbindFill
+    });
+
+    var on_off = new BinaryObject("off", "on");
+
+    $("#grid").on("click", function(e) {
+      e.preventDefault();
+      $(this).text("Grid " + on_off.val($c.hasClass("grid")));
+      $c.toggleClass("grid");
     });
   }
 
