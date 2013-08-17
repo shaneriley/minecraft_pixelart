@@ -8,6 +8,7 @@
     %li.active= link_to "white", "#", class: "white"
     - %w(orange magenta light_blue yellow lime pink gray light_gray cyan purple blue brown green red black).each do |color|
       %li= link_to color, "#", class: color
+  = link_to "erase", "#", id: "erase"
 
   %form(action="" method="post")
     %p.error Name is blank

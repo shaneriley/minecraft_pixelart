@@ -29,7 +29,7 @@ $(function() {
 
   var canvas_actions = {
     press: function(e) {
-      $c.on("mousemove.fill", canvas_actions.fill);
+      $c.on("mousemove.fill", color < 0 ? canvas_actions.erase : canvas_actions.fill);
     },
     fill: function(e) {
       var offset = getCursorOffset(e),
@@ -43,8 +43,25 @@ $(function() {
       $c.off("mousemove.fill");
     },
     release: function(e) {
-      canvas_actions.fill(e);
+      color < 0 ? canvas_actions.erase(e) : canvas_actions.fill(e);
       canvas_actions.unbindFill();
+    },
+    erase: function(e) {
+      var offset = getCursorOffset(e),
+          b = block_size,
+          r = offset.left * b,
+          c = offset.top * b;
+      ctx.clearRect(r, c, b, b);
+      matrix[offset.top][offset.left] = -1;
+    },
+    download: function(json) {
+      var $a = $("<a />", {
+            href: "data:text/plain," + JSON.stringify(json),
+            text: "Download!",
+            "class": "button",
+            target: "_blank"
+          });
+      $a.insertAfter($("form").find("[type=submit]"));
     }
   };
 
@@ -53,7 +70,15 @@ $(function() {
       e.preventDefault();
       var $li = $(e.target).closest("li").addClass("active");
       $li.closest("ul").find("li").not($li).removeClass("active");
+      $("#erase").removeClass("active");
       color = $li.index();
+    });
+
+    $("#erase").on("click", function(e) {
+      e.preventDefault();
+      $(this).addClass("active");
+      $("#wool .active").removeClass("active");
+      color = -1;
     });
 
     $("form").on("submit", function(e) {
@@ -68,7 +93,7 @@ $(function() {
         return;
       }
       $f.find(".error").hide();
-      console.dir(json);
+      canvas_actions.download(json);
     });
 
     $c.on({
